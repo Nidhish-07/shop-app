@@ -4,7 +4,7 @@ import { Avatar } from "react-native-paper";
 import { colors } from "../styles/styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-const Header = ({ backOption, showCart = false }) => {
+const Header = ({ backOption, emptyCart = false }) => {
   const navigate = useNavigation();
   const route = useRoute();
 
@@ -29,10 +29,12 @@ const Header = ({ backOption, showCart = false }) => {
 
       <TouchableOpacity
         style={{ position: "absolute", right: 20, top: 40, zIndex: 10 }}
-        onPress={showCart ? () => navigate.navigate("cart") : emptyCartHandler}
+        onPress={
+          !emptyCart ? () => navigate.navigate("cart") : emptyCartHandler
+        }
       >
         <Avatar.Icon
-          icon={showCart ? "cart-outline" : "delete-outline"}
+          icon={!emptyCart ? "cart-outline" : "delete-outline"}
           color={
             route.name === "product-details" ? colors.color2 : colors.color3
           }
