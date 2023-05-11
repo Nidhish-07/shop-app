@@ -10,6 +10,8 @@ import { colors, defaultStyle } from "../styles/styles";
 import Header from "../components/Header";
 import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal";
+import ProductCard from "../components/ProductCard";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const categories = [
@@ -35,9 +37,13 @@ const Home = () => {
   const [activeSearch, setActiveSearch] = React.useState(false);
   const [searchQuery, setSearchQuery] = useState(" ");
 
+  const navigate = useNavigation();
+
   const categoryButtonHandler = (id) => {
     setCategory(id);
   };
+
+  const addToCardHandler = (id) => {};
   return (
     <React.Fragment>
       <SearchModal
@@ -100,6 +106,24 @@ const Home = () => {
                   {item.title}
                 </Text>
               </Button>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {products.map((product, i) => (
+              <ProductCard
+                key={item._id}
+                stock={product.stock}
+                name={product.name}
+                price={product.price}
+                image={product.images[0]?.url}
+                addToCardHandler={addToCardHandler}
+                id={item._id}
+                i={index}
+                navigate={navigate}
+              />
             ))}
           </ScrollView>
         </View>
